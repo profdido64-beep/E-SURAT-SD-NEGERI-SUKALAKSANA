@@ -1,0 +1,6 @@
+{
+  "name": "E-Surat Sekolah - Sistem Manajemen Tata Usaha & Persuratan Digital",
+  "description": "Sistem Informasi Manajemen Surat Menyurat Digital, Disposisi Elektronik, Approval Surat Keluar, Template, Arsip, dan Pelaporan Sekolah.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

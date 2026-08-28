@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+@page {
+  size: 215mm 330mm; /* Standar Ukuran Kertas F4 / Folio Indonesia */
+  margin: 15mm 20mm 15mm 20mm;
+}
+
+@media print {
+  html, body {
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    width: 215mm;
+    height: 330mm;
+    margin: 0;
+    padding: 0;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* Hide background overlays, sidebars, buttons on print */
+  header,
+  aside,
+  nav,
+  button,
+  .no-print {
+    display: none !important;
+  }
+
+  /* Ensure modal backdrop doesn't dim print */
+  .fixed {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  /* Printable container styling */
+  .f4-paper-sheet {
+    width: 100% !important;
+    max-width: 215mm !important;
+    min-height: 330mm !important;
+    margin: 0 auto !important;
+    padding: 10mm 15mm !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+  }
+}
+
+/* F4 Paper Sheet Visual Preview for UI */
+.f4-paper-preview {
+  width: 100%;
+  max-width: 720px;
+  min-height: 980px; /* Proportional to 215mm x 330mm */
+  background: #ffffff;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+}
