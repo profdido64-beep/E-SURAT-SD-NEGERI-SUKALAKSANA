@@ -52,43 +52,18 @@ import { LembarDisposisiPrintModal } from './components/Modals/LembarDisposisiPr
 export default function App() {
   // Persistent State Init
   const [lettersIn, setLettersIn] = useState<LetterIn[]>(() => {
-    const saved = localStorage.getItem('esurat_letters_in');
+    const saved = localStorage.getItem('esurat_letters_in_v2');
     return saved ? JSON.parse(saved) : initialLettersIn;
   });
 
   const [lettersOut, setLettersOut] = useState<LetterOut[]>(() => {
-    const saved = localStorage.getItem('esurat_letters_out');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (
-          parsed.some((l: any) => l.signeeName?.includes('Syaifullah')) ||
-          !parsed.some((l: any) => l.id === 'SOUT-002')
-        ) {
-          return initialLettersOut;
-        }
-        return parsed;
-      } catch {
-        return initialLettersOut;
-      }
-    }
-    return initialLettersOut;
+    const saved = localStorage.getItem('esurat_letters_out_v2');
+    return saved ? JSON.parse(saved) : initialLettersOut;
   });
 
   const [dispositions, setDispositions] = useState<Disposition[]>(() => {
-    const saved = localStorage.getItem('esurat_dispositions');
-    if (saved) {
-      try {
-        const parsed = JSON.parse(saved);
-        if (parsed.some((d: any) => d.fromUserName?.includes('Syaifullah') || d.toUserName?.includes('Nurul'))) {
-          return initialDispositions;
-        }
-        return parsed;
-      } catch {
-        return initialDispositions;
-      }
-    }
-    return initialDispositions;
+    const saved = localStorage.getItem('esurat_dispositions_v2');
+    return saved ? JSON.parse(saved) : initialDispositions;
   });
 
   const [templates, setTemplates] = useState<LetterTemplate[]>(() => {
@@ -111,7 +86,7 @@ export default function App() {
   });
 
   const [archives, setArchives] = useState<ArchiveRecord[]>(() => {
-    const saved = localStorage.getItem('esurat_archives');
+    const saved = localStorage.getItem('esurat_archives_v2');
     return saved ? JSON.parse(saved) : initialArchives;
   });
 
@@ -222,19 +197,19 @@ export default function App() {
 
   // Sync to local storage
   useEffect(() => {
-    localStorage.setItem('esurat_letters_in', JSON.stringify(lettersIn));
+    localStorage.setItem('esurat_letters_in_v2', JSON.stringify(lettersIn));
   }, [lettersIn]);
   useEffect(() => {
-    localStorage.setItem('esurat_letters_out', JSON.stringify(lettersOut));
+    localStorage.setItem('esurat_letters_out_v2', JSON.stringify(lettersOut));
   }, [lettersOut]);
   useEffect(() => {
-    localStorage.setItem('esurat_dispositions', JSON.stringify(dispositions));
+    localStorage.setItem('esurat_dispositions_v2', JSON.stringify(dispositions));
   }, [dispositions]);
   useEffect(() => {
     localStorage.setItem('esurat_templates', JSON.stringify(templates));
   }, [templates]);
   useEffect(() => {
-    localStorage.setItem('esurat_archives', JSON.stringify(archives));
+    localStorage.setItem('esurat_archives_v2', JSON.stringify(archives));
   }, [archives]);
   useEffect(() => {
     localStorage.setItem('esurat_categories', JSON.stringify(categories));
@@ -249,7 +224,7 @@ export default function App() {
     localStorage.setItem('esurat_profile', JSON.stringify(schoolProfile));
   }, [schoolProfile]);
   useEffect(() => {
-    localStorage.setItem('esurat_logs', JSON.stringify(activityLogs));
+    localStorage.setItem('esurat_logs_v2', JSON.stringify(activityLogs));
   }, [activityLogs]);
 
   // Log activity helper
@@ -269,14 +244,41 @@ export default function App() {
 
   // Next Agenda Number Generator
   const getNextAgendaNumber = () => {
-    const count = lettersIn.length + 1;
-    return `SM-2026/${String(count).padStart(3, '0')}`;
+    const year = new Date().getFullYear();
+    let maxSeq = 0;
+    lettersIn.forEach((l) => {
+      const match = l.agendaNumber.match(new RegExp(`SM-${year}\\/(\\d+)`));
+      if (match && match[1]) {
+        const seq = parseInt(match[1], 10);
+        if (seq > maxSeq) {
+          maxSeq = seq;
+        }
+      }
+    });
+    const nextSeq = maxSeq + 1;
+    return `SM-${year}/${String(nextSeq).padStart(3, '0')}`;
   };
 
   // Next Letter Number Generator
   const getNextLetterNumber = () => {
-    const count = lettersOut.length + 1;
-    return `400.3.12.1/${String(count).padStart(3, '0')}/SD-Skl/VIII/2026`;
+    let maxSeq = 32;
+    lettersOut.forEach((l) => {
+      const match = l.letterNumber.match(/400\.3\.12\.1\/(\d+)\/SD-Skl/);
+      if (match && match[1]) {
+        const seq = parseInt(match[1], 10);
+        if (seq > maxSeq) {
+          maxSeq = seq;
+        }
+      }
+    });
+    const nextSeq = maxSeq + 1;
+
+    const months = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+    const d = new Date();
+    const romanMonth = months[d.getMonth()];
+    const year = d.getFullYear();
+
+    return `400.3.12.1/${String(nextSeq).padStart(3, '0')}/SD-Skl//${romanMonth}/${year}`;
   };
 
   // Actions
@@ -473,7 +475,8 @@ export default function App() {
   };
 
   // Deadline count
-  const deadlineCount = dispositions.filter((d) => d.status !== 'Selesai').length;
+  const activeDeadlines = dispositions.filter((d) => d.status !== 'Selesai');
+  const deadlineCount = activeDeadlines.length;
 
   return (
     <div className="flex h-screen bg-slate-100/70 font-sans text-slate-800 antialiased overflow-hidden">
@@ -483,7 +486,7 @@ export default function App() {
         onTabChange={(tab) => setActiveTab(tab)}
         counts={{
           suratMasuk: lettersIn.length,
-          disposisi: dispositions.filter((d) => d.status !== 'Selesai').length,
+          disposisi: activeDeadlines.length,
           suratKeluar: lettersOut.length,
           template: templates.length,
           arsip: archives.length,
@@ -510,6 +513,7 @@ export default function App() {
           allUsers={users}
           onOpenSchemaModal={() => setIsSchemaModalOpen(true)}
           deadlineCount={deadlineCount}
+          activeDeadlines={activeDeadlines}
           activeTabTitle={getTabTitle()}
           onNavigateToTab={(tab) => setActiveTab(tab)}
         />

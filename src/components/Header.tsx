@@ -21,6 +21,7 @@ interface HeaderProps {
   allUsers: User[];
   onOpenSchemaModal: () => void;
   deadlineCount: number;
+  activeDeadlines?: Disposition[];
   activeTabTitle: string;
   onNavigateToTab: (tab: string) => void;
   onSearchGlobal?: (query: string) => void;
@@ -33,6 +34,7 @@ export const Header: React.FC<HeaderProps> = ({
   allUsers,
   onOpenSchemaModal,
   deadlineCount,
+  activeDeadlines = [],
   activeTabTitle,
   onNavigateToTab,
   onSearchGlobal,
@@ -154,50 +156,40 @@ export const Header: React.FC<HeaderProps> = ({
                   </span>
                 </div>
                 <div className="divide-y divide-slate-100 max-h-80 overflow-y-auto">
-                  <div
-                    onClick={() => {
-                      onNavigateToTab('disposisi');
-                      setShowNotifMenu(false);
-                    }}
-                    className="p-3 hover:bg-red-50/60 cursor-pointer transition flex items-start gap-3"
-                  >
-                    <div className="p-2 bg-red-100 text-red-600 rounded-lg mt-0.5">
-                      <AlertTriangle className="w-4 h-4" />
+                  {activeDeadlines.length === 0 ? (
+                    <div className="p-4 text-center text-sm text-slate-500">
+                      Tidak ada notifikasi deadline saat ini.
                     </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-red-700 uppercase tracking-wide">Mendekati Deadline (3 Hari)</span>
-                        <span className="text-[10px] text-slate-400">SM-2026/001</span>
+                  ) : (
+                    activeDeadlines.map((disp) => (
+                      <div
+                        key={disp.id}
+                        onClick={() => {
+                          onNavigateToTab('disposisi');
+                          setShowNotifMenu(false);
+                        }}
+                        className="p-3 hover:bg-red-50/60 cursor-pointer transition flex items-start gap-3"
+                      >
+                        <div className="p-2 bg-red-100 text-red-600 rounded-lg mt-0.5">
+                          <AlertTriangle className="w-4 h-4" />
+                        </div>
+                        <div>
+                          <div className="flex items-center gap-2">
+                            <span className="text-xs font-bold text-red-700 uppercase tracking-wide">
+                              Mendekati Deadline
+                            </span>
+                            <span className="text-[10px] text-slate-400">{disp.letterInAgenda}</span>
+                          </div>
+                          <p className="text-xs text-slate-700 mt-0.5 font-medium line-clamp-1">
+                            {disp.letterInSubject}
+                          </p>
+                          <p className="text-[11px] text-slate-500">
+                            Batas: {new Date(disp.deadlineDate).toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' })} ({disp.sifat})
+                          </p>
+                        </div>
                       </div>
-                      <p className="text-xs text-slate-700 mt-0.5 font-medium">
-                        Disposisi Rakor ANBK 2026 Disdik DKI
-                      </p>
-                      <p className="text-[11px] text-slate-500">
-                        Batas tindak lanjut: 24 Agustus 2026 (Segera)
-                      </p>
-                    </div>
-                  </div>
-
-                  <div
-                    onClick={() => {
-                      onNavigateToTab('surat-masuk');
-                      setShowNotifMenu(false);
-                    }}
-                    className="p-3 hover:bg-blue-50/60 cursor-pointer transition flex items-start gap-3"
-                  >
-                    <div className="p-2 bg-blue-100 text-blue-600 rounded-lg mt-0.5">
-                      <Layers className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-xs font-bold text-blue-700">Surat Masuk Baru</span>
-                        <span className="text-[10px] text-slate-400">Hari ini</span>
-                      </div>
-                      <p className="text-xs text-slate-700 mt-0.5">
-                        Permohonan Fasilitasi Ruang Rapat Komite Sekolah
-                      </p>
-                    </div>
-                  </div>
+                    ))
+                  )}
                 </div>
                 <div className="p-2 border-t border-slate-100 text-center">
                   <button

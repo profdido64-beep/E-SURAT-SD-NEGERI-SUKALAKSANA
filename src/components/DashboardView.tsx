@@ -89,7 +89,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   const ditolakCount = lettersOut.filter((l) => l.approvalStatus === 'Ditolak').length;
 
   // Priority Dispositions
-  const priorityDispositions = dispositions.filter((d) => d.isPriority || d.sifat === 'Segera');
+  const priorityDispositions = dispositions.filter(
+    (d) => (d.isPriority || d.sifat === 'Segera') && d.status !== 'Selesai'
+  );
 
   // Live clock for floating notification
   const [liveTimeString, setLiveTimeString] = useState('');
@@ -798,7 +800,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
       {/* ========================================================================= */}
       {/* FLOATING TIME & DEADLINE NOTIFICATION (Bottom Right Widget) */}
       {/* ========================================================================= */}
-      {!dismissNotification && (
+      {!dismissNotification && deadlineCount > 0 && (
         <div className="fixed bottom-4 right-4 z-40 max-w-sm bg-white/95 backdrop-blur-md rounded-2xl shadow-2xl border border-rose-200 p-4 animate-in slide-in-from-bottom-4 duration-300">
           <div className="flex items-start justify-between gap-3">
             <div className="p-2 bg-rose-600 text-white rounded-xl shadow-md shadow-rose-600/30 shrink-0">
@@ -814,10 +816,10 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
               </div>
 
               <h4 className="text-xs font-bold text-slate-800 mt-1">
-                1 Surat Perlu Ditindaklanjuti
+                {deadlineCount} Surat Perlu Ditindaklanjuti
               </h4>
               <p className="text-[11px] text-slate-600 mt-0.5 leading-snug">
-                Agenda <strong>SM-2026/001</strong> (Rakor ANBK) jatuh tempo dalam 3 hari ke depan ({liveDateString}).
+                Ada {deadlineCount} disposisi yang membutuhkan tindak lanjut segera atau mendekati batas waktu penyelesaian.
               </p>
 
               <div className="mt-2.5 flex items-center gap-2">
