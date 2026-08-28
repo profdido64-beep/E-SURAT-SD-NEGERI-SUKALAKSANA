@@ -1,32 +1,22 @@
 import React from 'react';
 import { SchoolProfile } from '../types';
 
-// Using proxy to avoid CORS issues when generating PDF
-const logoKiriUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://drive.google.com/uc?export=view&id=1uJ4ACirNnGY7NIErAZY7qwNSekC0AuQm");
-const logoKananUrl = "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://drive.google.com/uc?export=view&id=1-5wkGy5GmreMK0jgcuL81cy5AZbBw7gi");
+// Use local static files instead of external Drive links to guarantee load reliability without CORS issues
+const defaultLogoKiriUrl = "/logo-cianjur.png";
+const defaultLogoKananUrl = "/logo-sdn-sukalaksana.png";
 
 export const LogoKabupatenCianjur: React.FC<{
   className?: string;
   size?: number;
   customUrl?: string;
 }> = ({ className = '', size = 76, customUrl }) => {
-  const [imgSrc, setImgSrc] = React.useState(() => {
-    return customUrl ? (customUrl.includes('allorigins') ? customUrl : `https://api.allorigins.win/raw?url=${encodeURIComponent(customUrl)}`) : logoKiriUrl;
-  });
-
   return (
     <img
-      src={imgSrc}
+      src={customUrl || defaultLogoKiriUrl}
       alt="Logo Kabupaten Cianjur"
       width={size}
       className={`object-contain inline-block shrink-0 ${className}`}
-      crossOrigin="anonymous"
-      onError={() => {
-        // Fallback to direct URL if proxy fails
-        if (imgSrc.includes('allorigins')) {
-          setImgSrc(customUrl || "https://drive.google.com/uc?export=view&id=1uJ4ACirNnGY7NIErAZY7qwNSekC0AuQm");
-        }
-      }}
+      crossOrigin={customUrl ? "anonymous" : undefined}
     />
   );
 };
@@ -36,23 +26,13 @@ export const LogoSdnSukalaksana: React.FC<{
   size?: number;
   customUrl?: string;
 }> = ({ className = '', size = 76, customUrl }) => {
-  const [imgSrc, setImgSrc] = React.useState(() => {
-    return customUrl ? (customUrl.includes('allorigins') ? customUrl : `https://api.allorigins.win/raw?url=${encodeURIComponent(customUrl)}`) : logoKananUrl;
-  });
-
   return (
     <img
-      src={imgSrc}
+      src={customUrl || defaultLogoKananUrl}
       alt="Logo SD Negeri Sukalaksana"
       width={size}
       className={`object-contain inline-block shrink-0 ${className}`}
-      crossOrigin="anonymous"
-      onError={() => {
-        // Fallback to direct URL if proxy fails
-        if (imgSrc.includes('allorigins')) {
-          setImgSrc(customUrl || "https://drive.google.com/uc?export=view&id=1-5wkGy5GmreMK0jgcuL81cy5AZbBw7gi");
-        }
-      }}
+      crossOrigin={customUrl ? "anonymous" : undefined}
     />
   );
 };
