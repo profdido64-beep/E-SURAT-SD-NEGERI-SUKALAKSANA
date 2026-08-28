@@ -249,69 +249,41 @@ export const LetterPreviewModal: React.FC<LetterPreviewModalProps> = ({
 
                 {/* IF SURAT KELUAR UMUM */}
                 {letterOut && (
-                  <div className="space-y-4 text-xs">
+                  <div className="font-serif text-black leading-relaxed" style={{ fontSize: '12pt', fontFamily: '"Times New Roman", Times, serif' }}>
                     {/* Meta details */}
-                    <div className="flex justify-between items-start">
+                    <div className="flex justify-between items-start mt-6 mb-8">
                       <div className="space-y-1">
-                        <p>
-                          <strong>Nomor</strong> :{' '}
-                          <span className="font-mono font-bold text-slate-800">
-                            {letterOut.letterNumber}
-                          </span>
-                        </p>
-                        <p>
-                          <strong>Sifat</strong> : {letterOut.sifat}
-                        </p>
-                        <p>
-                          <strong>Lampiran</strong> : {letterOut.attachmentCount || 0} Berkas
-                        </p>
-                        <p>
-                          <strong>Hal</strong> :{' '}
-                          <strong className="text-slate-900">{letterOut.subject}</strong>
-                        </p>
+                        <div className="flex"><span className="w-24">Nomor</span><span>:</span><span className="ml-2 font-bold">{letterOut.letterNumber}</span></div>
+                        <div className="flex"><span className="w-24">Sifat</span><span>:</span><span className="ml-2">{letterOut.sifat}</span></div>
+                        <div className="flex"><span className="w-24">Lampiran</span><span>:</span><span className="ml-2">{letterOut.attachmentCount ? `${letterOut.attachmentCount} Berkas` : '-'}</span></div>
+                        <div className="flex"><span className="w-24">Hal</span><span>:</span><span className="ml-2 font-bold">{letterOut.subject}</span></div>
                       </div>
-                      <div className="text-right space-y-1">
-                        <p>
-                          {schoolProfile.city}, {letterOut.letterDate}
-                        </p>
-                        <div className="pt-2 text-left">
-                          <p>Kepada Yth:</p>
-                          <p className="font-bold text-slate-800">{letterOut.destination}</p>
-                          <p>di Tempat</p>
+                      <div className="w-64 text-left">
+                        <p>{schoolProfile.city}, {letterOut.letterDate}</p>
+                        <div className="mt-4">
+                          <p>Kepada Yth,</p>
+                          <p className="font-bold">{letterOut.destination}</p>
+                          <p>di -</p>
+                          <p className="pl-6">Tempat</p>
                         </div>
                       </div>
                     </div>
 
                     {/* Surat Body */}
-                    <div className="pt-4 border-t border-slate-200">
-                      <div className="whitespace-pre-line text-xs sm:text-sm text-slate-800 leading-relaxed min-h-[140px]">
-                        {letterOut.content}
-                      </div>
+                    <div className="text-justify whitespace-pre-line min-h-[160px] mt-4 mb-12">
+                      {letterOut.content}
                     </div>
 
-                    {/* Signee Footer & QR Code Verification */}
-                    <div className="pt-8 flex items-end justify-between">
-                      <div className="p-2 border border-slate-200 rounded-lg text-center flex flex-col items-center bg-slate-50">
-                        <QrCode className="w-12 h-12 text-slate-800 mb-1" />
-                        <span className="text-[9px] text-slate-500">Verifikasi TTE Digital Resmi</span>
-                        <span className="text-[8px] font-mono text-slate-400">
-                          UUID: {letterOut.id}
-                        </span>
+                    {/* Signee Footer */}
+                    <div className="flex justify-between items-end">
+                      <div className="w-32">
+                        {/* Area for QR / stamp if needed */}
                       </div>
-
-                      <div className="text-center w-64 space-y-1">
-                        <p className="text-xs text-slate-700">{letterOut.signeePosition},</p>
-                        <div className="h-16 flex items-center justify-center">
-                          <span className="px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full font-bold text-[10px] border border-emerald-300">
-                            ✓ Telah Ditandatangani Secara Elektronik
-                          </span>
-                        </div>
-                        <p className="font-bold text-sm text-slate-900 underline">
-                          {letterOut.signeeName}
-                        </p>
-                        <p className="text-[11px] font-mono text-slate-600">
-                          NIP. {schoolProfile.principalNip}
-                        </p>
+                      <div className="w-64 text-left">
+                        <p>{letterOut.signeePosition},</p>
+                        <div className="h-24"></div>
+                        <p className="font-bold underline uppercase">{letterOut.signeeName}</p>
+                        <p>NIP. {schoolProfile.principalNip}</p>
                       </div>
                     </div>
                   </div>
