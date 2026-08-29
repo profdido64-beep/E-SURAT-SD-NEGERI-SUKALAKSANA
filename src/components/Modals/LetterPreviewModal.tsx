@@ -170,7 +170,7 @@ export const LetterPreviewModal: React.FC<LetterPreviewModalProps> = ({
           {/* Paper Container (F4 Ratio: 215mm x 330mm) */}
           <div
             ref={paperRef}
-            className="f4-paper-sheet f4-paper-preview mx-auto bg-white p-6 sm:p-10 rounded-lg shadow-xl border border-slate-300 text-slate-900"
+            className="f4-paper-sheet f4-paper-preview mx-auto bg-white rounded-lg shadow-xl border border-slate-300 text-slate-900"
           >
             {/* JIKA SURAT PINDAH */}
             {letterOut && isSuratPindah ? (
@@ -249,36 +249,34 @@ export const LetterPreviewModal: React.FC<LetterPreviewModalProps> = ({
 
                 {/* IF SURAT KELUAR UMUM */}
                 {letterOut && (
-                  <div className="font-serif text-black leading-relaxed" style={{ fontSize: '12pt', fontFamily: '"Times New Roman", Times, serif' }}>
+                  <div className="font-serif text-black leading-[1.5]" style={{ fontSize: '12pt', fontFamily: '"Times New Roman", Times, serif' }}>
                     {/* Meta details */}
-                    <div className="flex justify-between items-start mt-6 mb-8">
-                      <div className="space-y-1">
-                        <div className="flex"><span className="w-24">Nomor</span><span>:</span><span className="ml-2 font-bold">{letterOut.letterNumber}</span></div>
+                    <div className="flex justify-between items-start mt-4">
+                      <div className="space-y-0.5">
+                        <div className="flex"><span className="w-24">Nomor</span><span>:</span><span className="ml-2">{letterOut.letterNumber}</span></div>
                         <div className="flex"><span className="w-24">Sifat</span><span>:</span><span className="ml-2">{letterOut.sifat}</span></div>
                         <div className="flex"><span className="w-24">Lampiran</span><span>:</span><span className="ml-2">{letterOut.attachmentCount ? `${letterOut.attachmentCount} Berkas` : '-'}</span></div>
-                        <div className="flex"><span className="w-24">Hal</span><span>:</span><span className="ml-2 font-bold">{letterOut.subject}</span></div>
+                        <div className="flex"><span className="w-24">Hal</span><span>:</span><span className="ml-2">{letterOut.subject}</span></div>
                       </div>
-                      <div className="w-64 text-left">
+                      <div className="text-left">
                         <p>{schoolProfile.city}, {letterOut.letterDate}</p>
-                        <div className="mt-4">
-                          <p>Kepada Yth,</p>
-                          <p className="font-bold">{letterOut.destination}</p>
-                          <p>di -</p>
-                          <p className="pl-6">Tempat</p>
-                        </div>
                       </div>
                     </div>
 
+                    <div className="mt-6 mb-6">
+                      <p>Yth.</p>
+                      <p className="font-bold">{letterOut.destination}</p>
+                      <p>di -</p>
+                      <p className="pl-6">Tempat</p>
+                    </div>
+
                     {/* Surat Body */}
-                    <div className="text-justify whitespace-pre-line min-h-[160px] mt-4 mb-12">
+                    <div className="text-justify whitespace-pre-wrap min-h-[160px] mb-12">
                       {letterOut.content}
                     </div>
 
                     {/* Signee Footer */}
-                    <div className="flex justify-between items-end">
-                      <div className="w-32">
-                        {/* Area for QR / stamp if needed */}
-                      </div>
+                    <div className="flex justify-end">
                       <div className="w-64 text-left">
                         <p>{letterOut.signeePosition},</p>
                         <div className="h-24"></div>

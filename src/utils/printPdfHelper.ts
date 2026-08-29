@@ -64,7 +64,7 @@ export function printElement(
           <style>
             @page {
               size: 215mm 330mm; /* F4 / Folio Standar Kedinasan */
-              margin: 12mm 15mm 12mm 15mm;
+              margin: 25.4mm;
             }
             html, body {
               background-color: #ffffff !important;
