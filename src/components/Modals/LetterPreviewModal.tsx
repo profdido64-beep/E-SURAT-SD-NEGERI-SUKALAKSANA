@@ -93,12 +93,12 @@ export const LetterPreviewModal: React.FC<LetterPreviewModalProps> = ({
       : undefined;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/70 backdrop-blur-xs animate-in fade-in duration-200">
-      <div className="bg-white w-full max-w-4xl max-h-[96vh] rounded-2xl shadow-2xl border border-slate-200 flex flex-col overflow-hidden">
+    <div className="fixed inset-0 z-50 flex flex-col bg-white overflow-hidden animate-in fade-in duration-200">
+      <div className="bg-white w-full flex flex-col h-full">
         {/* Header Bar */}
-        <div className="px-5 py-3.5 bg-slate-900 text-white flex items-center justify-between border-b border-slate-800">
+        <div className="px-5 py-3.5 bg-white text-black flex items-center justify-between border-b border-gray-200 no-print">
           <div className="flex items-center gap-3">
-            <div className="p-2 bg-blue-600/30 text-blue-400 rounded-xl">
+            <div className="p-2 bg-gray-100 text-gray-700 rounded-xl">
               <FileText className="w-5 h-5" />
             </div>
             <div>
@@ -106,32 +106,31 @@ export const LetterPreviewModal: React.FC<LetterPreviewModalProps> = ({
                 {letterIn
                   ? `Detail Surat Masuk: ${letterIn.agendaNumber}`
                   : isSuratPindah
-                  ? `Pratinjau Surat Keterangan Pindah Sekolah (F4 Standar)`
-                  : `Pratinjau Surat Keluar Kedinasan`}
+                  ? `Pratinjau Surat Keterangan Pindah Sekolah`
+                  : `Pratinjau Surat Keluar`}
               </h3>
-              <p className="text-[11px] sm:text-xs text-slate-400">
-                Dokumen Tata Usaha & Kearsipan Kedinasan SD Negeri Sukalaksana
+              <p className="text-[11px] sm:text-xs text-gray-500">
+                SD Negeri Sukalaksana
               </p>
             </div>
           </div>
-
           <div className="flex items-center gap-2">
-            <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-semibold text-slate-300 bg-slate-800/80 px-2.5 py-1 rounded-md border border-slate-700">
+            <span className="hidden md:inline-flex items-center gap-1 text-[11px] font-semibold text-gray-600 bg-gray-100 px-2.5 py-1 rounded-md">
               <span>Kertas:</span>
-              <strong className="text-amber-400">F4 (215 × 330 mm)</strong>
+              <strong className="text-gray-900">F4 (215 × 330 mm)</strong>
             </span>
 
             {/* Print Button */}
             <button
               onClick={handleDirectPrint}
               disabled={isPrinting || isExportingPdf}
-              className="flex items-center gap-1.5 px-3 py-1.5 bg-slate-800 hover:bg-slate-700 disabled:opacity-50 text-white rounded-lg text-xs font-semibold transition border border-slate-700 cursor-pointer"
-              title="Cetak dokumen melalui dialog print"
+              className="flex items-center gap-1.5 px-3 py-1.5 bg-gray-100 hover:bg-gray-200 disabled:opacity-50 text-black rounded-lg text-xs font-semibold transition cursor-pointer"
+              title="Cetak dokumen"
             >
               {isPrinting ? (
                 <Loader2 className="w-3.5 h-3.5 animate-spin" />
               ) : (
-                <Printer className="w-3.5 h-3.5 text-blue-400" />
+                <Printer className="w-3.5 h-3.5" />
               )}
               <span className="hidden sm:inline">Cetak</span>
             </button>
@@ -140,8 +139,8 @@ export const LetterPreviewModal: React.FC<LetterPreviewModalProps> = ({
             <button
               onClick={handleDownloadPdf}
               disabled={isExportingPdf || isPrinting}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition shadow-sm cursor-pointer"
-              title="Unduh berkas format .pdf langsung ke perangkat"
+              className="flex items-center gap-1.5 px-3.5 py-1.5 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 text-white rounded-lg text-xs font-bold transition cursor-pointer"
+              title="Unduh berkas PDF"
             >
               {isExportingPdf ? (
                 <>
@@ -158,7 +157,7 @@ export const LetterPreviewModal: React.FC<LetterPreviewModalProps> = ({
 
             <button
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 rounded-lg transition cursor-pointer"
+              className="p-1.5 text-gray-500 hover:text-black hover:bg-gray-200 rounded-lg transition cursor-pointer"
             >
               <X className="w-5 h-5" />
             </button>
@@ -166,11 +165,11 @@ export const LetterPreviewModal: React.FC<LetterPreviewModalProps> = ({
         </div>
 
         {/* Modal Body / Paper Sheet */}
-        <div className="flex-1 overflow-y-auto p-3 sm:p-6 bg-slate-200/70 flex justify-center">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 bg-white flex justify-center">
           {/* Paper Container (F4 Ratio: 215mm x 330mm) */}
           <div
             ref={paperRef}
-            className="f4-paper-sheet f4-paper-preview mx-auto bg-white rounded-lg shadow-xl border border-slate-300 text-slate-900"
+            className="f4-paper-sheet f4-paper-preview mx-auto bg-white text-black"
           >
             {/* JIKA SURAT PINDAH */}
             {letterOut && isSuratPindah ? (
@@ -292,13 +291,13 @@ export const LetterPreviewModal: React.FC<LetterPreviewModalProps> = ({
         </div>
 
         {/* Footer */}
-        <div className="p-4 bg-white border-t border-slate-200 flex items-center justify-between">
-          <span className="text-xs text-slate-500">
-            Dokumen Persuratan Resmi {schoolProfile.name} • Format Presisi F4
+        <div className="p-4 bg-white border-t border-gray-200 flex items-center justify-between no-print">
+          <span className="text-xs text-gray-500">
+            Dokumen Persuratan Resmi {schoolProfile.name}
           </span>
           <button
             onClick={onClose}
-            className="px-4 py-2 bg-slate-800 hover:bg-slate-900 text-white rounded-xl text-xs font-semibold transition"
+            className="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-black rounded-lg text-xs font-semibold transition cursor-pointer"
           >
             Tutup
           </button>

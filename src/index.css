@@ -53,6 +53,7 @@
   margin: 0 auto;
   padding: 25.4mm;
   background: #ffffff;
-  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
+  border: none;
   box-sizing: border-box;
 }
