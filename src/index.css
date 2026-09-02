@@ -2,7 +2,7 @@
 
 @page {
   size: 215mm 330mm; /* Standar Ukuran Kertas F4 / Folio Indonesia */
-  margin: 25.4mm;
+  margin: 0;
 }
 
 @media print {
@@ -38,10 +38,11 @@
     width: 215mm !important;
     min-height: 330mm !important;
     margin: 0 auto !important;
-    padding: 0 !important;
+    padding: 25.4mm !important;
     box-shadow: none !important;
     border: none !important;
     border-radius: 0 !important;
+    box-sizing: border-box !important;
   }
 }
 

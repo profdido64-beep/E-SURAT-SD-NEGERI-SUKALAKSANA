@@ -70,11 +70,11 @@ export const KopSurat: React.FC<KopSuratProps> = ({
 
         {/* Bagian Tengah: Teks Kop Surat */}
         <div style={{ textAlign: 'center', flexGrow: 1, padding: '0 15px', lineHeight: 1.2 }}>
-          <div style={{ fontSize: size === 'sm' ? '12px' : '16px' }}>DINAS PENDIDIKAN PEMUDA DAN OLAHRAGA</div>
-          <div style={{ fontSize: size === 'sm' ? '12px' : '16px' }}>KABUPATEN CIANJUR</div>
-          <div style={{ fontSize: size === 'sm' ? '18px' : '24px', fontWeight: 'bold', margin: '4px 0' }}>{schoolName}</div>
-          <div style={{ fontSize: size === 'sm' ? '12px' : '16px' }}>{subdistrictOffice}</div>
-          <div style={{ fontSize: size === 'sm' ? '11px' : '14px', fontStyle: 'italic', marginTop: '4px' }}>{addressLine}</div>
+          <div style={{ fontSize: size === 'sm' ? '12px' : '16px', whiteSpace: 'nowrap' }}>DINAS PENDIDIKAN PEMUDA DAN OLAHRAGA</div>
+          <div style={{ fontSize: size === 'sm' ? '12px' : '16px', whiteSpace: 'nowrap' }}>KABUPATEN CIANJUR</div>
+          <div style={{ fontSize: size === 'sm' ? '18px' : '22px', fontWeight: 'bold', margin: '4px 0', whiteSpace: 'nowrap' }}>{schoolName}</div>
+          <div style={{ fontSize: size === 'sm' ? '12px' : '16px', whiteSpace: 'nowrap' }}>{subdistrictOffice}</div>
+          <div style={{ fontSize: size === 'sm' ? '11px' : '12px', fontStyle: 'italic', marginTop: '4px' }}>{addressLine}</div>
         </div>
 
         {/* Logo Kanan: Logo Sekolah */}

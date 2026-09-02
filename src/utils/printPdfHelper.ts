@@ -64,7 +64,7 @@ export function printElement(
           <style>
             @page {
               size: 215mm 330mm; /* F4 / Folio Standar Kedinasan */
-              margin: 25.4mm;
+              margin: 0;
             }
             html, body {
               background-color: #ffffff !important;
@@ -81,7 +81,8 @@ export function printElement(
               border: none !important;
               border-radius: 0 !important;
               margin: 0 auto !important;
-              padding: 0 !important;
+              padding: 25.4mm !important;
+              box-sizing: border-box !important;
               width: 100% !important;
               max-width: 100% !important;
             }

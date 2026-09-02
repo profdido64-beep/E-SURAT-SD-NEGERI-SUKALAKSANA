@@ -179,7 +179,7 @@ export const SuratPindahDoc: React.FC<SuratPindahDocProps> = ({
       <KopSurat profile={profile as any} showBorder={true} size="md" />
 
       {/* 2. JUDUL DAN NOMOR SURAT */}
-      <div className="text-center mt-4 mb-3">
+      <div className="text-center mt-2 mb-2">
         <h2
           className="font-bold uppercase tracking-wide inline-block border-b-[1.5px] border-black pb-0.5 text-black"
           style={{ fontSize: '12pt' }}
@@ -192,13 +192,13 @@ export const SuratPindahDoc: React.FC<SuratPindahDocProps> = ({
       </div>
 
       {/* 3. PARAGRAF PEMBUKA */}
-      <p className="text-justify text-black text-[10.5pt] leading-relaxed mb-2">
+      <p className="text-justify text-black text-[10.5pt] leading-relaxed mb-1.5">
         Yang bertandatangan di bawah ini, Kepala Sekolah Dasar Negeri Sukalaksana Desa Sukalaksana
         Kecamatan Sukanagara Kabupaten Cianjur, menerangkan bahwa:
       </p>
 
       {/* 4. DATA SISWA */}
-      <div className="text-[10.5pt] space-y-1 mb-2">
+      <div className="text-[10.5pt] space-y-0.5 mb-1.5">
         <div className="flex">
           <span className="w-44 shrink-0">Nama</span>
           <span className="w-4 shrink-0">:</span>
@@ -232,10 +232,9 @@ export const SuratPindahDoc: React.FC<SuratPindahDocProps> = ({
       </div>
 
       {/* 5. DATA ORANG TUA / WALI */}
-      <p className="text-black text-[10.5pt] mb-1">Menerangkan dengan sesungguhnya bahwa:</p>
-      <div className="text-[10.5pt] space-y-1 mb-2.5">
+      <div className="text-[10.5pt] space-y-0.5 mb-2">
         <div className="flex">
-          <span className="w-44 shrink-0">Nama</span>
+          <span className="w-44 shrink-0">Nama Orang Tua</span>
           <span className="w-4 shrink-0">:</span>
           <span className="font-bold uppercase text-black">{parentName}</span>
         </div>
@@ -252,27 +251,25 @@ export const SuratPindahDoc: React.FC<SuratPindahDocProps> = ({
       </div>
 
       {/* 6. KETERANGAN ALASAN PINDAH */}
-      <p className="text-justify text-black text-[10.5pt] leading-relaxed mb-2.5">
+      <p className="text-justify text-black text-[10.5pt] leading-relaxed mb-2">
         Telah mengajukan pindah ke <strong className="font-semibold">{destinationSchool}</strong>{' '}
         dengan alasan <strong className="font-semibold">{reason}</strong>. Bersama ini kami sertakan
         Buku Laporan Pendidikan (Raport) yang bersangkutan
       </p>
 
       {/* 7. PENUTUP */}
-      <p className="text-black text-[10.5pt] mb-4">Demikian dan terimakasih atas perhatiannya.</p>
+      <p className="text-black text-[10.5pt] mb-3">Demikian dan terimakasih atas perhatiannya.</p>
 
       {/* 8. TITIMANGSA & TANDA TANGAN KEPALA SEKOLAH (RATA KANAN) */}
-      <div className="flex justify-end mb-4">
+      <div className="flex justify-end mb-3">
         <div className="w-64 text-left text-[10.5pt]">
           <p>
             {letterCity}, {letterDate}
           </p>
           <p>Kepala Sekolah</p>
-
-          <div className="h-16 flex items-center">
+          <div className="h-14 flex items-center">
             {/* Ruang TTD */}
           </div>
-
           <p className="font-bold underline text-black">{principalName}</p>
           <p className="text-black">NIP. {principalNip}</p>
         </div>
